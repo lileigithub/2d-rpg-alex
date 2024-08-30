@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SkeletonMoveState : SkeletonGroundState
 {
-    public SkeletonMoveState(EnemySkeleton enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public SkeletonMoveState(EnemySkeleton enemy, EntityStateMachine<EnemyState> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
     }
 
@@ -25,9 +25,12 @@ public class SkeletonMoveState : SkeletonGroundState
         {
             enemySkeleton.Flip();
         }
+
         if (stateTimer < 0)
         {
+            Debug.Log("move time:" + stateTimer);
             stateMachine.ChangeState(enemySkeleton.idleState);
+            return;
         }
     }
 }

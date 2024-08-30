@@ -1,7 +1,9 @@
+using UnityEngine;
+
 public class SkeletonGroundState : EnemyState
 {
     protected EnemySkeleton enemySkeleton;
-    public SkeletonGroundState(EnemySkeleton enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public SkeletonGroundState(EnemySkeleton enemy, EntityStateMachine<EnemyState> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
         enemySkeleton = enemy;
     }
@@ -21,7 +23,9 @@ public class SkeletonGroundState : EnemyState
         base.Update();
         if (enemySkeleton.isPlayerDetected())
         {
+            Debug.Log("ground to battle");
             stateMachine.ChangeState(enemySkeleton.battleState);
+            return;
         }
     }
 }

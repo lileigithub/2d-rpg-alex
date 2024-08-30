@@ -14,7 +14,7 @@ public class PlayerPrimaryAttack : PlayerState
 
     //追加攻击的次数
     protected int appendAttackCount;
-    public PlayerPrimaryAttack(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerPrimaryAttack(Player player, EntityStateMachine<PlayerState> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

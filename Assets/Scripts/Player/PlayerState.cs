@@ -1,46 +1,25 @@
 using UnityEngine;
 
-public class PlayerState
+public class PlayerState : EntityState
 {
     protected Player player;
-    protected PlayerStateMachine stateMachine;
-    public string animBoolName { get; private set; }
-    protected Rigidbody2D rb;
+    protected EntityStateMachine<PlayerState> stateMachine;
+
+    public PlayerState(Player entity, EntityStateMachine<PlayerState> stateMachine, string animBoolName) : base(entity, animBoolName)
+    {
+        player = entity;
+        this.stateMachine = stateMachine;
+    }
+
     public float xInput { get; private set; }
     public float yInput { get; private set; }
-    protected float stateTimer;
-    //动画结束时的触发器
-    protected bool triggerCalled;
 
-    public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
+    public override void Update()
     {
-        this.player = player;
-        this.stateMachine = stateMachine;
-        this.animBoolName = animBoolName;
-        this.rb = player.rb;
-    }
-
-    public virtual void Enter()
-    {
-        player.animator.SetBool(animBoolName, true);
-        triggerCalled = false;
-    }
-
-    public virtual void Exit()
-    {
-        player.animator.SetBool(animBoolName, false);
-    }
-    public virtual void Update()
-    {
+        base.Update();
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
         player.animator.SetFloat("yVelocity", rb.velocity.y);
-        stateTimer -= Time.deltaTime;
-    }
-
-    public void AnimationFinishTrigger()
-    {
-        triggerCalled = true;
     }
 
 }

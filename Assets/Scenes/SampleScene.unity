@@ -188,6 +188,8 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  sightDistance: 10
+  attackDistance: 2
 --- !u!70 &19870597
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -434,6 +436,7 @@ GameObject:
   - component: {fileID: 743283782}
   - component: {fileID: 743283783}
   - component: {fileID: 743283784}
+  - component: {fileID: 743283785}
   m_Layer: 7
   m_Name: Animator
   m_TagString: Untagged
@@ -529,6 +532,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &743283785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743283781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab88220d0e5a8f4382fa6042bf5cd5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &787298335
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +744,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 874773578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc1b6e3efdc5e97488645a96c103695f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a69b1befc7d3f24381ea94424594214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &885661701

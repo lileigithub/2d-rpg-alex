@@ -8,10 +8,11 @@ public class EnemySkeleton : Enemy
     protected override void Awake()
     {
         base.Awake();
+        stateMachine = new EntityStateMachine<EnemyState>();
         idleState = new SkeletonIdleState(this, stateMachine, "Idle");
         moveState = new SkeletonMoveState(this, stateMachine, "Move");
         battleState = new SkeletonBattleState(this, stateMachine, "Move");
-        attackState = new SkeletonAttackState(this, stateMachine, "Idle");
+        attackState = new SkeletonAttackState(this, stateMachine, "Attack");
     }
     protected override void Start()
     {

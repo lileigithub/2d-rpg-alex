@@ -1,7 +1,10 @@
-public class SkeletonAttackState : SkeletonGroundState
+public class SkeletonAttackState : EnemyState
 {
-    public SkeletonAttackState(EnemySkeleton enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    protected EnemySkeleton enemySkeleton;
+
+    public SkeletonAttackState(EnemySkeleton enemy, EntityStateMachine<EnemyState> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+        enemySkeleton = enemy;
     }
 
     public override void Enter()
@@ -17,5 +20,11 @@ public class SkeletonAttackState : SkeletonGroundState
     public override void Update()
     {
         base.Update();
+        //triggerCalledÊ¹¹¥»÷Íê³É
+        if (!enemySkeleton.canAttack() && triggerCalled)
+        {
+            stateMachine.ChangeState(enemySkeleton.battleState);
+            return;
+        }
     }
 }

@@ -13,7 +13,7 @@ public class PlayerWallSlideState : PlayerState
     private float stopSlideCoolDownTime = 0.19f;
     //停止下滑的位置
     private float keepY;
-    public PlayerWallSlideState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerWallSlideState(Player player, EntityStateMachine<PlayerState> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -45,12 +45,9 @@ public class PlayerWallSlideState : PlayerState
             stateMachine.ChangeState(player.wallJumpState);
             return;
         }
-        Debug.Log("isWall:" + player.isWall + " isGround: " + player.isGrounded);
         //不在墙上 或到地面 或超过停止下滑时间，进入idle
         if (!player.isWall || player.isGrounded || stopSlideTimer > stopSlideCoolDownTime)
         {
-            Debug.Log("into idle, stopSlideTimer:" + stopSlideTimer + " stopSlideCoolDownTime:" + stopSlideCoolDownTime);
-
             stopSlideTimer = 0;
             stateMachine.ChangeState(player.idleState);
             return;

@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    #region State
-    public EnemyStateMachine stateMachine { get; private set; }
-    #endregion
+
+    protected EntityStateMachine<EnemyState> stateMachine { get; set; }
 
     #region Collision info
     [Header("Collision info")]
@@ -12,10 +11,12 @@ public class Enemy : Entity
     [SerializeField] protected LayerMask playerLayerMask;
     #endregion
 
+    public float sightDistance = 10;
+    public float attackDistance = 1;
+
     protected override void Awake()
     {
         base.Awake();
-        stateMachine = new EnemyStateMachine();
     }
 
     protected override void Start()
@@ -30,12 +31,21 @@ public class Enemy : Entity
 
     }
 
-    public virtual RaycastHit2D isPlayerDetected() => Physics2D.Raycast(playerCheck.position, Vector2.right * facingDir, 5, playerLayerMask);
+    public virtual RaycastHit2D isPlayerDetected() => Physics2D.Raycast(playerCheck.position, Vector2.right * facingDir, sightDistance, playerLayerMask);
+    public virtual RaycastHit2D canAttack() => Physics2D.Raycast(playerCheck.position, Vector2.right * facingDir, attackDistance, playerLayerMask);
 
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(playerCheck.position, new Vector2(playerCheck.position.x + 5 * facingDir, playerCheck.position.y));
+        Gizmos.DrawLine(playerCheck.position, new Vector2(playerCheck.position.x + sightDistance * facingDir, playerCheck.position.y));
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(playerCheck.position, new Vector2(playerCheck.position.x + attackDistance * facingDir, playerCheck.position.y));
+    }
+
+    public void AnimationTrigger()
+    {
+        if (stateMachine.currectState != null)
+            stateMachine.currectState.AnimationFinishTrigger();
     }
 }

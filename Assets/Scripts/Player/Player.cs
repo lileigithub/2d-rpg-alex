@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player : Entity
 {
     #region States
-    public PlayerStateMachine stateMachine { get; private set; }
+
     public PlayerState moveState { get; private set; }
     public PlayerState idleState { get; private set; }
     public PlayerFallState fallState { get; private set; }
@@ -31,10 +31,12 @@ public class Player : Entity
     public Vector2[] attackMovements;
     #endregion
 
+    protected EntityStateMachine<PlayerState> stateMachine { get; set; }
+
     protected override void Awake()
     {
         base.Awake();
-        stateMachine = new PlayerStateMachine();
+        stateMachine = new EntityStateMachine<PlayerState>();
         moveState = new PlayerMoveState(this, stateMachine, "Move");
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         fallState = new PlayerFallState(this, stateMachine, "Jump");
@@ -72,5 +74,10 @@ public class Player : Entity
         }
     }
 
-    public void AnimationTrigger() => stateMachine.currectState.AnimationFinishTrigger();
+    public void AnimationTrigger()
+    {
+        if (stateMachine.currectState != null)
+            stateMachine.currectState.AnimationFinishTrigger();
+    }
+
 }

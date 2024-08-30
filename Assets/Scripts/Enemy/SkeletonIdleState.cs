@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public class SkeletonIdleState : SkeletonGroundState
 {
-    public SkeletonIdleState(EnemySkeleton enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public SkeletonIdleState(EnemySkeleton enemy, EntityStateMachine<EnemyState> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
     }
 
@@ -20,7 +22,9 @@ public class SkeletonIdleState : SkeletonGroundState
         base.Update();
         if (stateTimer < 0)
         {
+            Debug.Log("idle time:" + stateTimer);
             stateMachine.ChangeState(enemySkeleton.moveState);
+            return;
         }
     }
 }
