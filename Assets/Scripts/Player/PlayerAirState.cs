@@ -22,7 +22,7 @@ public class PlayerAirState : PlayerState
     {
         base.Update();
         //在空中的位移输入稍微减速
-        player.setVelocity(xInput * player.moveSpeed * 0.8f, rb.velocity.y, xInput);
+        player.setVelocityAndFacingDir(xInput * player.moveSpeed * 0.8f, rb.velocity.y, xInput);
         //使跳和下落时碰到墙，都可滑墙
         if (player.isWall && !player.isGrounded)
         {

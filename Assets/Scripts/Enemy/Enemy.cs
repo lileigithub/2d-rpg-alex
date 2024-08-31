@@ -14,6 +14,12 @@ public class Enemy : Entity
     public float sightDistance = 10;
     public float attackDistance = 1;
 
+    public float stunnedDuraction = 1f;
+    public Vector2 stunnedDirection;
+
+    [SerializeField] private GameObject counterImage;
+    private bool canBeStunned;
+
     protected override void Awake()
     {
         base.Awake();
@@ -47,5 +53,43 @@ public class Enemy : Entity
     {
         if (stateMachine.currectState != null)
             stateMachine.currectState.AnimationFinishTrigger();
+    }
+
+    public void CanAttack()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(attackCheck.position, attackRadius);
+        foreach (var collider in colliders)
+        {
+            Player victim = collider.GetComponent<Player>();
+            if (victim != null)
+                victim.DamageBy(this);
+        }
+    }
+
+    public void OpenCountWindow()
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+    public void CloseCountWindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+
+    public virtual bool CanBeAndStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCountWindow();
+            return true;
+        }
+        return false;
+    }
+
+    public virtual void ChangeToBattle()
+    {
+
     }
 }

@@ -54,16 +54,16 @@ public class PlayerWallSlideState : PlayerState
         }
 
         if (yInput < 0)
-            player.setVelocity(0, rb.velocity.y);
+            player.setVelocityAndFacingDir(0, rb.velocity.y);
         else if (stopSlideTimer > 0 && stopSlideTimer <= stopSlideCoolDownTime)
         {
             //在停止时间内，位置y保持不变
             player.transform.position = new Vector2(player.transform.position.x, keepY);
-            player.setVelocity(rb.velocity.x, 0);
+            player.setVelocityAndFacingDir(rb.velocity.x, 0);
         }
         else
             //减速下滑 这里要写0，不能写rb.velocity.x，因为和tile map墙体碰撞时会有一个反作用力使x为负数,而x又决定面朝方向。
             //我已经把tile map 的composite collider 2D 的 offset distance 设为0了，这样就没有反作用力了，或者说反向的速度。
-            player.setVelocity(0, rb.velocity.y * 0.3f);
+            player.setVelocityAndFacingDir(0, rb.velocity.y * 0.3f);
     }
 }

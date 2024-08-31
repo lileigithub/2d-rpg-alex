@@ -9,12 +9,13 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
         stateTimer = player.dashDuration;
+        SkillManager.instance.cloneSkill.CreateClone(player.transform);
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.setVelocity(0, rb.velocity.y);
+        player.setVelocityAndFacingDir(0, rb.velocity.y);
     }
 
     public override void Update()
@@ -26,7 +27,7 @@ public class PlayerDashState : PlayerState
         }
         else if (stateTimer > 0)
         {
-            player.setVelocity(player.dashSpeed * player.dashDir, 0);
+            player.setVelocityAndFacingDir(player.dashSpeed * player.dashDir, 0);
         }
     }
 }

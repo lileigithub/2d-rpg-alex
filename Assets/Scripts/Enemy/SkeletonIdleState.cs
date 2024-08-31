@@ -22,7 +22,6 @@ public class SkeletonIdleState : SkeletonGroundState
         base.Update();
         if (stateTimer < 0)
         {
-            Debug.Log("idle time:" + stateTimer);
             stateMachine.ChangeState(enemySkeleton.moveState);
             return;
         }

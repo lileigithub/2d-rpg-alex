@@ -8,7 +8,7 @@ public class PlayerWallJumpState : PlayerState
     {
         base.Enter();
         stateTimer = 0.2f;
-        player.setVelocity(5 * -player.facingDir, player.jumpForce);
+        player.setVelocityAndFacingDir(5 * -player.facingDir, player.jumpForce);
     }
 
     public override void Exit()

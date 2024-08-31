@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SkeletonGroundState : EnemyState
 {
     protected EnemySkeleton enemySkeleton;
@@ -23,7 +21,6 @@ public class SkeletonGroundState : EnemyState
         base.Update();
         if (enemySkeleton.isPlayerDetected())
         {
-            Debug.Log("ground to battle");
             stateMachine.ChangeState(enemySkeleton.battleState);
             return;
         }

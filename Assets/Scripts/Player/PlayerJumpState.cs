@@ -9,13 +9,13 @@ public class PlayerJumpState : PlayerAirState
     {
         base.Enter();
         //give y a velocity 
-        player.setVelocity(rb.velocity.x, player.jumpForce);
+        player.setVelocityAndFacingDir(rb.velocity.x, player.jumpForce);
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.setVelocity(rb.velocity.x, rb.velocity.y);
+        //attacker.setVelocityAndFacingDir(rb.velocity.x, rb.velocity.y);
     }
 
     public override void Update()

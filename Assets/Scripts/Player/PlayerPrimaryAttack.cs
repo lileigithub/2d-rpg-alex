@@ -6,6 +6,8 @@ using UnityEngine;
  */
 public class PlayerPrimaryAttack : PlayerState
 {
+    public static readonly string ComboCounterName = "ComboCounter";
+
     //攻击的combo次序
     private int comboCounter;
     private float lastTimeAttacked;
@@ -25,16 +27,18 @@ public class PlayerPrimaryAttack : PlayerState
         {
             comboCounter = 0;
         }
-        player.animator.SetInteger("ComboCounter", comboCounter);
+        player.animator.SetInteger(ComboCounterName, comboCounter);
         float attackDir = player.facingDir;
+        //这里不用update()里的xInput而是重新获取，因为上一次update()可能不是最新的，Enter()时输入改变了。
+        float nowXInput = Input.GetAxisRaw("Horizontal");
         //检测攻击时=前的输入方向，以决定面向方向
-        if (xInput != 0)
+        if (nowXInput != 0)
         {
-            attackDir = xInput;
+            attackDir = nowXInput;
         }
         //攻击时有小位移，增加表现力
-        player.setVelocity(player.attackMovements[comboCounter].x * attackDir, player.attackMovements[comboCounter].y);
-        //enemy.animator.speed = 3;
+        player.setVelocityAndFacingDir(player.attackMovements[comboCounter].x * attackDir, player.attackMovements[comboCounter].y);
+        //attacker.animator.speed = 3;
     }
 
     public override void Exit()
@@ -42,12 +46,18 @@ public class PlayerPrimaryAttack : PlayerState
         base.Exit();
         comboCounter++;
         lastTimeAttacked = Time.time;
-        //enemy.animator.speed = 1;
+        //attacker.animator.speed = 1;
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            stateMachine.ChangeState(player.jumpState);
+            return;
+        }
 
         //可在攻击进行中再追加一次攻击，更流畅
         if (Input.GetKeyDown(KeyCode.K))

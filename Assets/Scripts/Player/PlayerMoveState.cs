@@ -20,7 +20,7 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        player.setVelocity(xInput * player.moveSpeed, rb.velocity.y);
+        player.setVelocityAndFacingDir(xInput * player.moveSpeed, rb.velocity.y);
         if (xInput == 0 && player.isGrounded)
         {
             stateMachine.ChangeState(player.idleState);

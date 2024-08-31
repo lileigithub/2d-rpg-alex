@@ -12,6 +12,7 @@ public class Player : Entity
     public PlayerWallSlideState wallSlideStatte { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
     public PlayerPrimaryAttack primaryAttack { get; private set; }
+    public PlayerCounterAttackState counterAttackState { get; private set; }
     #endregion
 
     #region Move info
@@ -21,14 +22,13 @@ public class Player : Entity
     public float dashSpeed = 8f;
     public float dashDuration = 0.4f;
     public float dashDir;
-    [SerializeField] private float dashCoolDownTime = 1f;
-    [SerializeField] private float dashUsageTimer;
     #endregion
 
     #region Attack info
     [Header("Attack info")]
     //攻击时的小位移
     public Vector2[] attackMovements;
+    public float counterAttackDuration = 0.2f;
     #endregion
 
     protected EntityStateMachine<PlayerState> stateMachine { get; set; }
@@ -45,6 +45,7 @@ public class Player : Entity
         wallSlideStatte = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
         primaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
+        counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
     }
     // Enter is called before the first frame update
     protected override void Start()
@@ -64,10 +65,8 @@ public class Player : Entity
 
     private void CheckForDashInput()
     {
-        dashUsageTimer -= Time.deltaTime;
-        if (Input.GetButtonDown("Fire3") && dashUsageTimer < 0)
+        if (Input.GetButtonDown("Fire3") && SkillManager.instance.dashSkill.CanAndUseSkill())
         {
-            dashUsageTimer = dashCoolDownTime;
             dashDir = Input.GetAxisRaw("Horizontal");
             if (dashDir == 0) dashDir = facingDir;
             stateMachine.ChangeState(dashState);

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SkeletonMoveState : SkeletonGroundState
 {
     public SkeletonMoveState(EnemySkeleton enemy, EntityStateMachine<EnemyState> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
@@ -20,7 +18,7 @@ public class SkeletonMoveState : SkeletonGroundState
     public override void Update()
     {
         base.Update();
-        rb.velocity = new Vector2(enemySkeleton.moveSpeed * enemySkeleton.facingDir, rb.velocity.y);
+        enemy.setVelocityAndFacingDir(enemySkeleton.moveSpeed * enemySkeleton.facingDir, rb.velocity.y);
         if (enemySkeleton.isWall || !enemySkeleton.isGrounded)
         {
             enemySkeleton.Flip();
@@ -28,7 +26,6 @@ public class SkeletonMoveState : SkeletonGroundState
 
         if (stateTimer < 0)
         {
-            Debug.Log("move time:" + stateTimer);
             stateMachine.ChangeState(enemySkeleton.idleState);
             return;
         }
