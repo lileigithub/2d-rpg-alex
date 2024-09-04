@@ -62,7 +62,7 @@ public class Enemy : Entity
         {
             Player victim = collider.GetComponent<Player>();
             if (victim != null)
-                victim.DamageBy(this);
+                victim.DamageEffectBy(this);
         }
     }
 
@@ -83,6 +83,7 @@ public class Enemy : Entity
         if (canBeStunned)
         {
             CloseCountWindow();
+            stats.TakeDamage(PlayerManager.instance.Player.stats.damage.GetValue(), null);
             return true;
         }
         return false;

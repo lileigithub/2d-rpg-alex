@@ -13,6 +13,7 @@ public class Player : Entity
     public PlayerWallJumpState wallJumpState { get; private set; }
     public PlayerPrimaryAttack primaryAttack { get; private set; }
     public PlayerCounterAttackState counterAttackState { get; private set; }
+    public PlayerDeadState deadState { get; private set; }
     #endregion
 
     #region Move info
@@ -46,6 +47,7 @@ public class Player : Entity
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
         primaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
         counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
+        deadState = new PlayerDeadState(this, stateMachine, "Dead");
     }
     // Enter is called before the first frame update
     protected override void Start()
@@ -61,6 +63,12 @@ public class Player : Entity
         stateMachine.currectState.Update();
         xInput = stateMachine.currectState.xInput;
         CheckForDashInput();
+    }
+
+    public override void Dead()
+    {
+        base.Dead();
+        stateMachine.ChangeState(deadState);
     }
 
     private void CheckForDashInput()

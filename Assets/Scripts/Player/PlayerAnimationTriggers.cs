@@ -17,7 +17,9 @@ public class PlayerAnimationTriggers : MonoBehaviour
             Enemy victim = collider.GetComponent<Enemy>();
             if (victim != null)
             {
-                victim.DamageBy(attacker);
+                Debug.Log("attacker.stats:" + (attacker.stats != null));
+                Debug.Log("victim.stats:" + (victim.stats != null));
+                attacker.stats.DoDamage(victim.stats);
                 victim.ChangeToBattle();
             }
         }
